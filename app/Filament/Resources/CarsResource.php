@@ -23,7 +23,42 @@ class CarsResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('customer_id')
+                    ->numeric(),
+                Forms\Components\TextInput::make('car_model_id')
+                    ->numeric(),
+                Forms\Components\TextInput::make('fuel_id')
+                    ->numeric(),
+                Forms\Components\TextInput::make('car_colour_id')
+                    ->numeric(),
+                Forms\Components\TextInput::make('car_number')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('manufacture_year')
+                    ->numeric(),
+                Forms\Components\Toggle::make('main_car')
+                    ->required(),
+                Forms\Components\Toggle::make('can_deliver')
+                    ->required(),
+                Forms\Components\TextInput::make('status')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('technical_passport_front')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('technical_passport_back')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('car_photo_left')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('car_photo_right')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('car_photo_front')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('car_photo_back')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('car_photo_trunk')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('car_photo_seats_back')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('car_photo_seats_front')
+                    ->maxLength(255),
             ]);
     }
 
@@ -31,13 +66,60 @@ class CarsResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('customer_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('car_model_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('fuel_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('car_colour_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('car_number')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('manufacture_year')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\IconColumn::make('main_car')
+                    ->boolean(),
+                Tables\Columns\IconColumn::make('can_deliver')
+                    ->boolean(),
+                Tables\Columns\TextColumn::make('status')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('technical_passport_front')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('technical_passport_back')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('car_photo_left')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('car_photo_right')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('car_photo_front')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('car_photo_back')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('car_photo_trunk')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('car_photo_seats_back')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('car_photo_seats_front')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -59,7 +141,6 @@ class CarsResource extends Resource
         return [
             'index' => Pages\ListCars::route('/'),
             'create' => Pages\CreateCars::route('/create'),
-            'view' => Pages\ViewCars::route('/{record}'),
             'edit' => Pages\EditCars::route('/{record}/edit'),
         ];
     }

@@ -20,11 +20,16 @@ class Customer extends Model
         'email',
         'customer_type',
         'device_count',
-        'avatar_url',
+        'avatar_url'
     ];
 
     public function documents()
     {
         return $this->hasMany(Documents::class);
+    }
+
+    public function sessions()
+    {
+        return $this->hasMany(CustomerSession::class);
     }
 }
