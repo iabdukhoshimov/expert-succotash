@@ -29,36 +29,32 @@ class CarsResource extends Resource
                     ->numeric(),
                 Forms\Components\TextInput::make('fuel_id')
                     ->numeric(),
-                Forms\Components\TextInput::make('car_colour_id')
-                    ->numeric(),
-                Forms\Components\TextInput::make('car_number')
-                    ->maxLength(255),
+                Forms\Components\Select::make('car_colour_id')
+                    ->relationship('carColour', 'name')
+                    ->preload()
+                    ->searchable()
+                    ->native(false)
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make('name')
+                    ])
+                    ->createOptionAction(fn ($action) => $action->slideOver()),
+                Forms\Components\TextInput::make('car_number'),
                 Forms\Components\TextInput::make('manufacture_year')
                     ->numeric(),
                 Forms\Components\Toggle::make('main_car')
                     ->required(),
                 Forms\Components\Toggle::make('can_deliver')
                     ->required(),
-                Forms\Components\TextInput::make('status')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('technical_passport_front')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('technical_passport_back')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('car_photo_left')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('car_photo_right')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('car_photo_front')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('car_photo_back')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('car_photo_trunk')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('car_photo_seats_back')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('car_photo_seats_front')
-                    ->maxLength(255),
+                Forms\Components\TextInput::make('status'),
+                Forms\Components\TextInput::make('technical_passport_front'),
+                Forms\Components\TextInput::make('technical_passport_back'),
+                Forms\Components\TextInput::make('car_photo_left'),
+                Forms\Components\TextInput::make('car_photo_right'),
+                Forms\Components\TextInput::make('car_photo_front'),
+                Forms\Components\TextInput::make('car_photo_back'),
+                Forms\Components\TextInput::make('car_photo_trunk'),
+                Forms\Components\TextInput::make('car_photo_seats_back'),
+                Forms\Components\TextInput::make('car_photo_seats_front'),
             ]);
     }
 
@@ -120,6 +116,7 @@ class CarsResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -141,6 +138,7 @@ class CarsResource extends Resource
         return [
             'index' => Pages\ListCars::route('/'),
             'create' => Pages\CreateCars::route('/create'),
+            'view' => Pages\ViewCars::route('/{record}'),
             'edit' => Pages\EditCars::route('/{record}/edit'),
         ];
     }
